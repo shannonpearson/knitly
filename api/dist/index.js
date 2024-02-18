@@ -13,6 +13,10 @@ app.use(body_parser_1.default.json());
 app.get("/", (req, res) => {
     res.send("Express + TypeScript Server");
 });
+app.post("/login", (req, res) => {
+    console.log("login request:", res);
+    res.send("you have reached the login route!");
+});
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
