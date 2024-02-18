@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres
+    container_name: knitly
+    environment:
+      POSTGRES_PASSWORD: knitadmin
+      POSTGRES_USER: postgres
+      POSTGRES_DB: knitly
+    ports:
+      - '5432'
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - ./db/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+volumes:
+  postgresdata:
