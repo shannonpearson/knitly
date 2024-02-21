@@ -1,7 +1,7 @@
 <template>
-  <div class="login">
-    <h1>Login</h1>
-    <form id="login-form" v-on:submit.prevent="submitLogin">
+  <div class="Signup">
+    <h1>Signup</h1>
+    <form id="Signup-form" v-on:submit.prevent="submitSignup">
       <div>
         <label for="email">Email</label>
         <input type="text" name="email" v-model="email" />
@@ -10,17 +10,17 @@
         <label for="password">Password</label>
         <input type="password" name="password" v-model="password" />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit">Signup</button>
     </form>
-    <div>No account? <RouterLink to="signup">Sign up</RouterLink></div>
+    <div>Already have an account? <RouterLink to="login">Log in</RouterLink></div>
   </div>
 </template>
 
 <script lang="ts">
-import { logInClicked } from '../auth'
+import { signUpClicked } from '../auth'
 
 export default {
-  name: 'LoginView',
+  name: 'SignupView',
   data() {
     return {
       email: '',
@@ -28,15 +28,15 @@ export default {
     }
   },
   methods: {
-    submitLogin() {
-      logInClicked(this.email, this.password)
+    submitSignup() {
+      signUpClicked(this.email, this.password)
     }
   }
 }
 </script>
 
 <style scoped>
-.login {
+.signup {
   display: flex;
   flex-direction: column;
 }
