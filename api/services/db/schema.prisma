@@ -1,18 +1,18 @@
-datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id          String      @id @default(uuid())
-  firstname   String?
-  lastname    String?
-  email       String      @unique
-  created_on  DateTime    @default(now())
-  updated_on  DateTime    @default(now())
-  last_login  DateTime?
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id         String    @id @db.Uuid
+  firstname  String?
+  lastname   String?
+  email      String?
+  created_on DateTime? @db.Timestamp(6)
+  updated_on DateTime? @db.Timestamp(6)
+  last_login DateTime? @db.Timestamp(6)
 }

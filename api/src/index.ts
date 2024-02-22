@@ -7,6 +7,7 @@ import { middleware as stMiddleware } from "supertokens-node/framework/express";
 import { Client } from "pg";
 import { errorHandler as stErrorHandler } from "supertokens-node/framework/express";
 import initAuth from "./auth";
+import client from "../services/db/client";
 
 initAuth();
 
@@ -24,25 +25,9 @@ app.use(
 
 app.use(stMiddleware());
 
-const DB_USER = process.env.DB_USER;
-const DB_PW = process.env.DB_PASSWORD;
-const DB_HOST = process.env.DB_HOST;
-const DB_PORT = process.env.DB_PORT;
-const DB_NAME = process.env.DB_NAME;
-const connectionString = `postgres://${DB_USER}:${DB_PW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-const client = new Client(connectionString);
-
 (async () => {
-	await client.connect();
-
-	client
-		.query("SELECT * FROM users limit 1;")
-		.then((data) => {
-			console.log("DATA:", data.rows);
-		})
-		.catch((error: string) => {
-			console.log("ERROR:", error);
-		});
+	const users = await client.users.findMany();
+	console.log("users", users);
 })();
 
 app.get("/", (req: Request, res: Response) => {

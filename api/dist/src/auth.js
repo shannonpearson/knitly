@@ -6,6 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertokens_node_1 = __importDefault(require("supertokens-node"));
 const session_1 = __importDefault(require("supertokens-node/recipe/session"));
 const emailpassword_1 = __importDefault(require("supertokens-node/recipe/emailpassword"));
+const signUpOverride = (originalImplementation) => {
+    return {
+        ...originalImplementation,
+        signUp: async (input) => {
+            let response = await originalImplementation.signUp(input);
+            // Post sign up response, we check if it was successful
+            if (response.status === "OK" && response.user.loginMethods.length === 1) {
+                const { id, emails } = response.user;
+            }
+            return response;
+        },
+    };
+};
 const init = () => supertokens_node_1.default.init({
     framework: "express",
     supertokens: {
@@ -20,7 +33,9 @@ const init = () => supertokens_node_1.default.init({
         websiteBasePath: "/auth",
     },
     recipeList: [
-        emailpassword_1.default.init(), // initializes signin / sign up features
+        emailpassword_1.default.init({
+            override: { functions: signUpOverride },
+        }), // initializes signin / sign up features
         session_1.default.init(), // initializes session features
     ],
 });

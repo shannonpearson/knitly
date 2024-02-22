@@ -9,9 +9,9 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const supertokens_node_1 = __importDefault(require("supertokens-node"));
 const express_2 = require("supertokens-node/framework/express");
-const pg_1 = require("pg");
 const express_3 = require("supertokens-node/framework/express");
 const auth_1 = __importDefault(require("./auth"));
+const client_1 = __importDefault(require("../services/db/client"));
 (0, auth_1.default)();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
@@ -22,23 +22,9 @@ app.use((0, cors_1.default)({
     credentials: true,
 }));
 app.use((0, express_2.middleware)());
-const DB_USER = process.env.DB_USER;
-const DB_PW = process.env.DB_PASSWORD;
-const DB_HOST = process.env.DB_HOST;
-const DB_PORT = process.env.DB_PORT;
-const DB_NAME = process.env.DB_NAME;
-const connectionString = `postgres://${DB_USER}:${DB_PW}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-const client = new pg_1.Client(connectionString);
 (async () => {
-    await client.connect();
-    client
-        .query("SELECT * FROM users limit 1;")
-        .then((data) => {
-        console.log("DATA:", data.rows);
-    })
-        .catch((error) => {
-        console.log("ERROR:", error);
-    });
+    const users = await client_1.default.users.findMany();
+    console.log("users", users);
 })();
 app.get("/", (req, res) => {
     res.send("Express + TypeScript Server");
