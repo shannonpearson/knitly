@@ -7,12 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id         String    @id @db.Uuid
-  firstname  String?
-  lastname   String?
-  email      String?
-  created_on DateTime? @db.Timestamp(6)
-  updated_on DateTime? @db.Timestamp(6)
-  last_login DateTime? @db.Timestamp(6)
+model User {
+  id         String @id @db.Uuid	@default(uuid())
+  firstName  String?
+  lastName   String?
+  email      String @unique
+  supertokensId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
 }
