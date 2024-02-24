@@ -6,7 +6,6 @@ import supertokens from "supertokens-node";
 import { middleware as stMiddleware } from "supertokens-node/framework/express";
 import { errorHandler as stErrorHandler } from "supertokens-node/framework/express";
 import initAuth from "./auth";
-import client from "../services/db/client";
 
 initAuth();
 
@@ -23,11 +22,6 @@ app.use(
 );
 
 app.use(stMiddleware());
-
-(async () => {
-	const users = await client.user.findMany();
-	console.log("users", users);
-})();
 
 app.get("/", (req: Request, res: Response) => {
 	res.send("Express + TypeScript Server");
