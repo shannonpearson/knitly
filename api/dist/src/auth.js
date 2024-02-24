@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertokens_node_1 = __importDefault(require("supertokens-node"));
 const session_1 = __importDefault(require("supertokens-node/recipe/session"));
 const emailpassword_1 = __importDefault(require("supertokens-node/recipe/emailpassword"));
+const user_1 = require("../services/user");
 const signUpOverride = (originalImplementation) => {
     return {
         ...originalImplementation,
@@ -14,6 +15,12 @@ const signUpOverride = (originalImplementation) => {
             // Post sign up response, we check if it was successful
             if (response.status === "OK" && response.user.loginMethods.length === 1) {
                 const { id, emails } = response.user;
+                const userData = {
+                    supertokensId: id,
+                    email: emails[0],
+                };
+                const createdUser = await (0, user_1.create)(userData);
+                return { ...response, createdUser };
             }
             return response;
         },

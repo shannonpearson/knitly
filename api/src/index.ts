@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import supertokens from "supertokens-node";
 import { middleware as stMiddleware } from "supertokens-node/framework/express";
-import { Client } from "pg";
 import { errorHandler as stErrorHandler } from "supertokens-node/framework/express";
 import initAuth from "./auth";
 import client from "../services/db/client";
@@ -26,7 +25,7 @@ app.use(
 app.use(stMiddleware());
 
 (async () => {
-	const users = await client.users.findMany();
+	const users = await client.user.findMany();
 	console.log("users", users);
 })();
 

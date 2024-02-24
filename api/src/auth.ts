@@ -2,22 +2,40 @@ import supertokens from "supertokens-node";
 import type { RecipeInterface } from "supertokens-node/recipe/emailpassword";
 import Session from "supertokens-node/recipe/session";
 import EmailPassword from "supertokens-node/recipe/emailpassword";
+import { createOne, updateOne } from "../services/user";
 
-const signUpOverride = (
+const signUpOverrideFunctions = (
 	originalImplementation: RecipeInterface
 ): RecipeInterface => {
 	return {
 		...originalImplementation,
 		signUp: async (input) => {
 			let response = await originalImplementation.signUp(input);
-			// Post sign up response, we check if it was successful
+
 			if (response.status === "OK" && response.user.loginMethods.length === 1) {
 				const { id, emails } = response.user;
+				const userData = {
+					supertokensId: id,
+					email: emails[0],
+				};
+				const createdUser = await createOne(userData);
+				return { ...response, createdUser };
+			}
+			return response;
+		},
+		signIn: async (input) => {
+			let response = await originalImplementation.signIn(input);
+
+			if (response.status === "OK") {
+				const email = response.user.emails[0];
+				const updatedUser = await updateOne(email, { lastLogin: new Date() });
+				return { ...response, updatedUser };
 			}
 			return response;
 		},
 	};
 };
+
 const init = () =>
 	supertokens.init({
 		framework: "express",
@@ -35,7 +53,7 @@ const init = () =>
 		},
 		recipeList: [
 			EmailPassword.init({
-				override: { functions: signUpOverride },
+				override: { functions: signUpOverrideFunctions },
 			}), // initializes signin / sign up features
 			Session.init(), // initializes session features
 		],

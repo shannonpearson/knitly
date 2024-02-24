@@ -23,7 +23,7 @@ app.use((0, cors_1.default)({
 }));
 app.use((0, express_2.middleware)());
 (async () => {
-    const users = await client_1.default.users.findMany();
+    const users = await client_1.default.user.findMany();
     console.log("users", users);
 })();
 app.get("/", (req, res) => {
