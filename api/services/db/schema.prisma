@@ -12,7 +12,7 @@ model User {
   firstName  String?
   lastName   String?
   email      String @unique
-  supertokensId String
+  supertokensId String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   lastLogin DateTime?
