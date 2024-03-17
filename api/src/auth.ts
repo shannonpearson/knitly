@@ -2,7 +2,7 @@ import supertokens from "supertokens-node";
 import type { RecipeInterface } from "supertokens-node/recipe/emailpassword";
 import Session from "supertokens-node/recipe/session";
 import EmailPassword from "supertokens-node/recipe/emailpassword";
-import { createOne, updateOne } from "../services/user";
+import { createOne, updateOne } from "../services/users";
 
 const signUpOverrideFunctions = (
 	originalImplementation: RecipeInterface
@@ -46,16 +46,20 @@ const init = () =>
 		},
 		appInfo: {
 			appName: "knitly",
-			apiDomain: "https://localhost:3000",
-			websiteDomain: "https://localhost:5173",
+			apiDomain: "http://localhost:3000",
+			websiteDomain: "http://localhost:5173",
 			apiBasePath: "/auth",
 			websiteBasePath: "/auth",
 		},
 		recipeList: [
 			EmailPassword.init({
-				override: { functions: signUpOverrideFunctions },
+				override: {
+					functions: signUpOverrideFunctions,
+				},
 			}), // initializes signin / sign up features
-			Session.init(), // initializes session features
+			Session.init({
+				cookieDomain: "localhost",
+			}), // initializes session features
 		],
 	});
 
