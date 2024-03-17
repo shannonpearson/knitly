@@ -4,11 +4,11 @@
     <form id="login-form" v-on:submit.prevent="submitLogin">
       <div>
         <label for="email">Email</label>
-        <input type="text" name="email" v-model="email" />
+        <input type="text" name="email" id="email" v-model="email" autocomplete="on" />
       </div>
       <div>
         <label for="password">Password</label>
-        <input type="password" name="password" v-model="password" />
+        <input type="password" name="password" id="password" v-model="password" autocomplete="on" />
       </div>
       <button type="submit">Login</button>
     </form>
@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     submitLogin() {
+      console.log('exec submitLogin')
       logInClicked(this.email, this.password)
     }
   }
