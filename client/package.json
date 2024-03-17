@@ -16,7 +16,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.8.0",
     "axios": "^1.6.7",
+    "pinia": "^2.1.7",
     "supertokens-web-js": "^0.9.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"

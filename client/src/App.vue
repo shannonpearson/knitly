@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
-</script>
-
 <template>
   <header>
     <div class="wrapper">
@@ -12,6 +7,19 @@ import NavBar from './components/NavBar.vue'
 
   <RouterView />
 </template>
+
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { onMounted } from 'vue'
+import NavBar from './components/NavBar.vue'
+import { useLoggedInUserStore } from '@/stores/loggedInUser'
+
+onMounted(() => {
+  console.log('app mounted')
+  const loggedInUserStore = useLoggedInUserStore()
+  loggedInUserStore.initialize()
+})
+</script>
 
 <style scoped>
 header {
