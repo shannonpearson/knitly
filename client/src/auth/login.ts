@@ -1,7 +1,11 @@
+import axios from 'axios'
 import { signIn } from 'supertokens-web-js/recipe/emailpassword'
+import { useLoggedInUserStore } from '@/stores/loggedInUser'
 
 async function logInClicked(email: string, password: string) {
   try {
+    console.log('exec logInClicked')
+
     const loginParams = {
       formFields: [
         {
@@ -32,7 +36,11 @@ async function logInClicked(email: string, password: string) {
     } else {
       // sign in successful. The session tokens are automatically handled by
       // the frontend SDK.
-      window.location.href = '/'
+      const loggedInUserStore = useLoggedInUserStore()
+      loggedInUserStore.setLoggedIn(true)
+      console.log('SUCCESS RESPONSE', JSON.stringify(response))
+      // loggedInUserStore.setUser(response.createdUser)
+      // window.location.href = '/'
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {

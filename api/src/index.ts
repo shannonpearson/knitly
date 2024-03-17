@@ -6,6 +6,7 @@ import supertokens from "supertokens-node";
 import { middleware as stMiddleware } from "supertokens-node/framework/express";
 import { errorHandler as stErrorHandler } from "supertokens-node/framework/express";
 import initAuth from "./auth";
+import userRoutes from "../routes/users";
 
 initAuth();
 
@@ -27,10 +28,7 @@ app.get("/", (req: Request, res: Response) => {
 	res.send("Express + TypeScript Server");
 });
 
-app.post("/login", (req: Request, res: Response) => {
-	console.log("LOGIN REQUEST", req.body);
-	res.send("you have reached the login route!");
-});
+app.use(userRoutes);
 
 app.use(stErrorHandler());
 

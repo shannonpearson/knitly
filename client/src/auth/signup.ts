@@ -1,7 +1,12 @@
+import axios from 'axios'
 import { signUp } from 'supertokens-web-js/recipe/emailpassword'
+import { useLoggedInUserStore } from '@/stores/loggedInUser'
+import { doesSessionExist } from 'supertokens-web-js/recipe/session'
 
 async function signUpClicked(email: string, password: string) {
   try {
+    console.log('exec signUpClicked')
+
     const signupParams = {
       formFields: [
         {
@@ -35,7 +40,17 @@ async function signUpClicked(email: string, password: string) {
     } else {
       // sign up successful. The session tokens are automatically handled by
       // the frontend SDK.
-      window.location.href = '/'
+      const { id: supertokensId } = response.user
+      console.log('does session exist', await doesSessionExist())
+      console.log('getting user')
+      // const createdUser = await axios.get(`${import.meta.env.VITE_API_URL}/users/${supertokensId}`)
+      // console.log('CREATED USER DATA', createdUser)
+
+      // const loggedInUserStore = useLoggedInUserStore()
+      // loggedInUserStore.setLoggedIn(true)
+      // console.log('SUCCESS RESPONSE', JSON.parse(JSON.stringify(response)))
+
+      // window.location.href = '/'
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
