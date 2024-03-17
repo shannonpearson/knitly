@@ -2,8 +2,10 @@
   <div class="navbar">
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/profile">Profile</RouterLink>
-      <button @click="onLogoutClick" v-if="isLoggedIn">Log out</button>
+      <div class="authenticated-route-links" v-if="isLoggedIn">
+        <RouterLink to="/profile">Profile</RouterLink>
+        <button @click="onLogoutClick">Log out</button>
+      </div>
       <RouterLink to="/login" v-else>Login</RouterLink>
     </nav>
   </div>
@@ -39,7 +41,16 @@ export default {
 </script>
 
 <style scoped>
-a {
+nav > * {
   padding: 10px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+button {
+  margin: 0 5px;
 }
 </style>

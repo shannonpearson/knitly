@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-container">
     <h1>My Profile</h1>
     <div>{{ user }}</div>
   </div>
@@ -18,7 +18,6 @@ export default {
     }
   },
   created() {
-    console.log('current user', this.loggedInUserStore.user)
     this.user = this.loggedInUserStore.user
   }
 }
