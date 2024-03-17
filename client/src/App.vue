@@ -15,7 +15,6 @@ import NavBar from './components/NavBar.vue'
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
 
 onMounted(() => {
-  console.log('app mounted')
   const loggedInUserStore = useLoggedInUserStore()
   loggedInUserStore.initialize()
 })
