@@ -15,29 +15,22 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
       this.getAuthState()
     },
     async getAuthState() {
-      console.log('exec getAuthState')
       const isAuthenticated = await doesSessionExist()
-      console.log('isAuthenticated', isAuthenticated)
       this.isLoggedIn = isAuthenticated
+
       if (isAuthenticated) {
         const loggedInUserSuperokensId = await Session.getUserId()
-        // fetch logged in user from db
-        console.log('loggged in', loggedInUserSuperokensId)
-        const {
-          data: { currentUser }
-        } = await axios.get(`/users/${loggedInUserSuperokensId}`)
-        console.log('fetched current user:', currentUser, await doesSessionExist())
+        const url = `${import.meta.env.VITE_API_URL}/users/${loggedInUserSuperokensId}`
+        const { data: currentUser } = await axios.get(url)
         this.user = currentUser
       } else {
         this.user = null
       }
     },
     setUser(user: User | null) {
-      console.log('setting user', user)
       this.user = user
     },
     setLoggedIn(loggedIn: boolean) {
-      console.log('setting logged in', loggedIn)
       this.isLoggedIn = loggedIn
     },
     handleLogout() {
