@@ -1,7 +1,12 @@
 <template>
   <div class="profile-container">
     <h1>My Profile</h1>
-    <div>{{ user }}</div>
+    <div class="profile-details">
+      <p>{{ displayName }}</p>
+      <p>Email: {{ user?.email ?? '' }}</p>
+      <p>Member since: {{ createdDate }}</p>
+      <p>Last updated: {{ updatedDate }}</p>
+    </div>
   </div>
 </template>
 
@@ -15,6 +20,25 @@ export default {
     return {
       loggedInUserStore: useLoggedInUserStore(),
       user: null as User | null
+    }
+  },
+  computed: {
+    displayName() {
+      return `${this.user?.firstName ?? ''} ${this.user?.lastName ?? ''}`.trim()
+    },
+    createdDate() {
+      if (!this.user?.createdAt) {
+        return ''
+      }
+      const d = new Date(this.user.createdAt)
+      return d.toDateString()
+    },
+    updatedDate() {
+      if (!this.user?.updatedAt) {
+        return ''
+      }
+      const d = new Date(this.user.updatedAt)
+      return d.toDateString()
     }
   },
   created() {

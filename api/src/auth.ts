@@ -17,6 +17,7 @@ const signUpOverrideFunctions = (
 				const userData = {
 					supertokensId: id,
 					email: emails[0],
+					lastLogin: new Date(),
 				};
 				const createdUser = await createOne(userData);
 				return { ...response, createdUser };
@@ -29,7 +30,7 @@ const signUpOverrideFunctions = (
 			if (response.status === "OK") {
 				const email = response.user.emails[0];
 				const updatedUser = await updateOne(email, { lastLogin: new Date() });
-				return { ...response, updatedUser };
+				return { ...response, updatedUser }; // updatedUser not currently included
 			}
 			return response;
 		},
