@@ -21,7 +21,8 @@
     "pinia": "^2.1.7",
     "supertokens-web-js": "^0.9.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.5.9"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
