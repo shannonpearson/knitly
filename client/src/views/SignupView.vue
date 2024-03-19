@@ -1,13 +1,13 @@
 <template>
-  <div class="Signup">
-    <h1>Signup</h1>
+  <div class="signup">
+    <AppHeader size="l" message-id="auth.signup" />
     <form id="Signup-form" v-on:submit.prevent="submitSignup">
       <div>
-        <label for="email">Email</label>
+        <label for="email">{{ $t('auth.email') }}</label>
         <input type="text" id="email" name="email" v-model="email" autocomplete="off" />
       </div>
       <div>
-        <label for="password">Password</label>
+        <label for="password">{{ $t('auth.password') }}</label>
         <input
           type="password"
           id="password"
@@ -16,17 +16,23 @@
           autocomplete="off"
         />
       </div>
-      <button type="submit">Signup</button>
+      <button type="submit">{{ $t('auth.signup') }}</button>
     </form>
-    <div>Already have an account? <RouterLink to="login">Log in</RouterLink></div>
+    <div>
+      {{ $t('auth.existing_account') }} <RouterLink to="login">{{ $t('auth.login') }}</RouterLink>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { signUpClicked } from '../auth'
+import AppHeader from '@/components/AppHeader.vue'
 
 export default {
   name: 'SignupView',
+  components: {
+    AppHeader
+  },
   data() {
     return {
       email: '',

@@ -1,12 +1,12 @@
 <template>
   <v-app-bar density="compact">
     <nav>
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/">{{ $t('nav.home') }}</RouterLink>
       <div class="authenticated-route-links" v-if="isLoggedIn">
-        <RouterLink to="/profile">Profile</RouterLink>
-        <button @click="onLogoutClick">Log out</button>
+        <RouterLink to="/profile">{{ $t('nav.profile') }}</RouterLink>
+        <button @click="onLogoutClick">{{ $t('nav.logout') }}</button>
       </div>
-      <RouterLink to="/login" v-else>Login</RouterLink>
+      <RouterLink to="/login" v-else>{{ $t('nav.login') }}</RouterLink>
     </nav>
   </v-app-bar>
 </template>

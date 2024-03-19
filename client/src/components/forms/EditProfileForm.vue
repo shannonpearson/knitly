@@ -1,6 +1,6 @@
 <template>
   <div class="update-profile-form">
-    <h1>Update profile info</h1>
+    <AppHeader size="l" message-id="profile.title_edit" />
     <div class="update-profile-form-fields">
       <p><label for="email">Email</label>{{ user.email }}</p>
 
@@ -11,13 +11,16 @@
         <label for="lastName">First name</label><input type="text" v-model="formData.lastName" />
       </p>
     </div>
-    <v-btn @click.once="handleSubmit">Save</v-btn>
+    <v-btn @click.once="handleSubmit">{{ $t('common.save') }}</v-btn>
   </div>
 </template>
 
 <script lang="ts">
+import AppHeader from '../AppHeader.vue'
+
 export default {
   name: 'UpdateProfileForm',
+  components: { AppHeader },
   props: {
     user: {
       type: Object,

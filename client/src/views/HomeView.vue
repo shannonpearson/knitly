@@ -1,12 +1,14 @@
 <template>
   <main>
-    <h1>Home View</h1>
+    <AppHeader size="l" message-id="nav.home" />
   </main>
 </template>
 
 <script lang="ts">
+import AppHeader from '@/components/AppHeader.vue'
 export default {
-  name: 'HomeView'
+  name: 'HomeView',
+  components: { AppHeader }
 }
 </script>
 

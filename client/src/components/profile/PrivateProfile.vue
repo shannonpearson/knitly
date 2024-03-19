@@ -1,19 +1,22 @@
 <template>
   <div>
-    <h1>My Profile</h1>
+    <AppHeader size="l" message-id="profile.title_view" />
     <div class="profile-details">
       <p>{{ displayName }}</p>
       <p>Email: {{ user?.email ?? '' }}</p>
       <p>Member since: {{ createdDate }}</p>
       <p>Last updated: {{ updatedDate }}</p>
     </div>
-    <v-btn @click="$emit('edit')">Update profile</v-btn>
+    <v-btn @click="$emit('edit')">{{ $t('profile.button_edit') }}</v-btn>
   </div>
 </template>
 
 <script lang="ts">
+import AppHeader from '../AppHeader.vue'
+
 export default {
   name: 'PrivateProfile',
+  components: { AppHeader },
   props: {
     user: {
       type: Object,

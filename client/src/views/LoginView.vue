@@ -1,26 +1,32 @@
 <template>
   <div class="login">
-    <h1>Login</h1>
+    <AppHeader size="l" message-id="auth.login" />
     <form id="login-form" v-on:submit.prevent="submitLogin">
       <div>
-        <label for="email">Email</label>
+        <label for="email">{{ $t('auth.email') }}</label>
         <input type="text" name="email" id="email" v-model="email" autocomplete="on" />
       </div>
       <div>
-        <label for="password">Password</label>
+        <label for="password">{{ $t('auth.password') }}</label>
         <input type="password" name="password" id="password" v-model="password" autocomplete="on" />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit">{{ $t('auth.login') }}</button>
     </form>
-    <div>No account? <RouterLink to="signup">Sign up</RouterLink></div>
+    <div>
+      {{ $t('auth.no_account') }}<RouterLink to="signup">{{ $t('auth.signup') }}</RouterLink>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { logInClicked } from '../auth'
+import AppHeader from '@/components/AppHeader.vue'
 
 export default {
   name: 'LoginView',
+  components: {
+    AppHeader
+  },
   data() {
     return {
       email: '',
