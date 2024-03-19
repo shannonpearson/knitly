@@ -7,7 +7,7 @@
       <p>Member since: {{ createdDate }}</p>
       <p>Last updated: {{ updatedDate }}</p>
     </div>
-    <button @click="$emit('edit')">Update profile</button>
+    <v-btn @click="$emit('edit')">Update profile</v-btn>
   </div>
 </template>
 

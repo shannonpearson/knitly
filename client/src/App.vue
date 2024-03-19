@@ -1,11 +1,10 @@
 <template>
-  <header>
-    <div class="nav-wrapper">
-      <NavBar />
-    </div>
-  </header>
-
-  <RouterView />
+  <v-app>
+    <NavBar />
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
 
 <script setup lang="ts">

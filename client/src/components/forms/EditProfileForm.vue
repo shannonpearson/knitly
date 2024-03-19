@@ -11,7 +11,7 @@
         <label for="lastName">First name</label><input type="text" v-model="formData.lastName" />
       </p>
     </div>
-    <button @click="handleSubmit">Save</button>
+    <v-btn @click.once="handleSubmit">Save</v-btn>
   </div>
 </template>
 

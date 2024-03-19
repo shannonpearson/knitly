@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <v-app-bar density="compact">
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <div class="authenticated-route-links" v-if="isLoggedIn">
@@ -8,7 +8,7 @@
       </div>
       <RouterLink to="/login" v-else>Login</RouterLink>
     </nav>
-  </div>
+  </v-app-bar>
 </template>
 
 <script lang="ts">
@@ -41,16 +41,24 @@ export default {
 </script>
 
 <style scoped>
-nav > * {
-  padding: 10px;
-}
-
 nav {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  padding: 0px 15px;
+}
+
+a {
+  padding: 0 8px;
 }
 
 button {
   margin: 0 5px;
+}
+
+.authenticated-route-links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
