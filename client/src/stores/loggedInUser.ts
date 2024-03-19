@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 import type User from '@/types/User'
-import * as Session from 'supertokens-web-js/recipe/session'
 import { doesSessionExist } from 'supertokens-web-js/recipe/session'
+import { getLoggedInUser, updateLoggedInUser } from '@/queries/user'
 
 // this is an OPTIONS store
 export const useLoggedInUserStore = defineStore('loggedInUser', {
@@ -19,9 +18,7 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
       this.isLoggedIn = isAuthenticated
 
       if (isAuthenticated) {
-        const loggedInUserSuperokensId = await Session.getUserId()
-        const url = `${import.meta.env.VITE_API_URL}/users/${loggedInUserSuperokensId}`
-        const { data: currentUser } = await axios.get(url)
+        const currentUser = await getLoggedInUser()
         this.user = currentUser
       } else {
         this.user = null
@@ -40,6 +37,11 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
     handleLogin(u: User) {
       this.setUser(u)
       this.setLoggedIn(true)
+    },
+    async updateProfile(u: Partial<User>) {
+      const updatedUser = await updateLoggedInUser(u)
+      this.user = updatedUser
+      console.log('finished update')
     }
   }
 })

@@ -1,49 +1,52 @@
 <template>
   <div class="profile-container">
-    <h1>My Profile</h1>
-    <div class="profile-details">
-      <p>{{ displayName }}</p>
-      <p>Email: {{ user?.email ?? '' }}</p>
-      <p>Member since: {{ createdDate }}</p>
-      <p>Last updated: {{ updatedDate }}</p>
+    <div v-if="editing && user">
+      <EditProfileForm @handle-submit="updateProfile" :user="user" />
     </div>
+    <div v-else-if="user">
+      <PrivateProfile :user="user" @edit="() => updateEditingState(true)" />
+    </div>
+    <div v-else>No profile to show! This page should never appear!</div>
   </div>
 </template>
 
 <script lang="ts">
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
 import type User from '@/types/User'
+import PrivateProfile from '@/components/profile/PrivateProfile.vue'
+import EditProfileForm from '@/components/forms/EditProfileForm.vue'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'ProfileView',
+  components: { PrivateProfile, EditProfileForm },
   data() {
     return {
       loggedInUserStore: useLoggedInUserStore(),
-      user: null as User | null
+      // user: null as User | null,
+      editing: false
+    }
+  },
+  methods: {
+    updateEditingState(editing: boolean) {
+      this.editing = editing
+    },
+    async updateProfile(userData: Partial<User>) {
+      if (this.user?.id) {
+        await this.loggedInUserStore.updateProfile({ id: this.user.id, ...userData })
+      }
+      this.updateEditingState(false)
     }
   },
   computed: {
-    displayName() {
-      return `${this.user?.firstName ?? ''} ${this.user?.lastName ?? ''}`.trim()
-    },
-    createdDate() {
-      if (!this.user?.createdAt) {
-        return ''
-      }
-      const d = new Date(this.user.createdAt)
-      return d.toDateString()
-    },
-    updatedDate() {
-      if (!this.user?.updatedAt) {
-        return ''
-      }
-      const d = new Date(this.user.updatedAt)
-      return d.toDateString()
+    user() {
+      return storeToRefs(this.loggedInUserStore).user.value
     }
-  },
-  created() {
-    this.user = this.loggedInUserStore.user
   }
+  // created() {
+  //   const { user } = storeToRefs(this.loggedInUserStore)
+  //   this.user = user
+  // }
 }
 </script>
 

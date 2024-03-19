@@ -9,25 +9,22 @@ router.get(
 	"/users/:authId",
 	verifySession(),
 	async function (req: SessionRequest, res) {
-		console.log("ROUTER GET");
 		const sessionSupertokensId = req.session!.getUserId();
 		const { authId } = req.params;
 		if (sessionSupertokensId !== authId) {
 			res.status(401).send("Requested user is not authenticated");
 		}
 		const user = await getByAuthId(authId);
-		console.log("USER BY ID", user);
 		res.status(200).send(user);
 	}
 );
 
 router.put(
-	"/users/:id",
+	"/users/:authId",
 	verifySession(),
 	async function (req: SessionRequest, res) {
 		const sessionSupertokensId = req.session!.getUserId();
 		const updatedUser = await update(sessionSupertokensId, req.body);
-
 		res.status(200).send(updatedUser);
 	}
 );
