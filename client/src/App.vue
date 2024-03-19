@@ -10,14 +10,12 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { onMounted } from 'vue'
+import {} from 'vue'
 import NavBar from './components/NavBar.vue'
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
 
-onMounted(() => {
-  const loggedInUserStore = useLoggedInUserStore()
-  loggedInUserStore.initialize()
-})
+const loggedInUserStore = useLoggedInUserStore()
+loggedInUserStore.initialize()
 </script>
 
 <style scoped>
