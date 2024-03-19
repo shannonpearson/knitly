@@ -18,8 +18,10 @@ const en = {
   },
   profile: {
     button_edit: 'Edit Profile',
+    email: 'Email address',
     last_updated: 'Last updated',
     member_since: 'Member since',
+    name: 'Name',
     title_edit: 'Edit My Profile',
     title_view: 'My Profile'
   }

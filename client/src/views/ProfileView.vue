@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-container">
+  <v-sheet class="profile-container">
     <div v-if="editing && user">
       <EditProfileForm @handle-submit="updateProfile" :user="user" />
     </div>
@@ -7,7 +7,7 @@
       <PrivateProfile :user="user" @edit="() => updateEditingState(true)" />
     </div>
     <div v-else>No profile to show! This page should never appear!</div>
-  </div>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -50,4 +50,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-sheet {
+  margin: 0 20px;
+}
+:deep(button) {
+  margin-top: 20px;
+}
+</style>
