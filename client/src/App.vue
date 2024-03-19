@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="wrapper">
+    <div class="nav-wrapper">
       <NavBar />
     </div>
   </header>
@@ -12,9 +12,12 @@
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
+import { onBeforeMount } from 'vue'
 
-const loggedInUserStore = useLoggedInUserStore()
-loggedInUserStore.initialize()
+onBeforeMount(async () => {
+  const loggedInUserStore = useLoggedInUserStore()
+  await loggedInUserStore.initialize()
+})
 </script>
 
 <style scoped>
