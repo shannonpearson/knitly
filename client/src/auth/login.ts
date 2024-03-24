@@ -4,8 +4,6 @@ import { useLoggedInUserStore } from '@/stores/loggedInUser'
 
 async function logInClicked(email: string, password: string) {
   try {
-    console.log('exec logInClicked')
-
     const loginParams = {
       formFields: [
         {
@@ -38,7 +36,6 @@ async function logInClicked(email: string, password: string) {
       // the frontend SDK.
       const loggedInUserStore = useLoggedInUserStore()
       loggedInUserStore.setLoggedIn(true)
-      console.log('SUCCESS RESPONSE', JSON.stringify(response))
       // loggedInUserStore.setUser(response.createdUser)
       // window.location.href = '/'
     }

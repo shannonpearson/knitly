@@ -50,7 +50,6 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
     async updateProfile(u: Partial<User>) {
       const updatedUser = await updateLoggedInUser(u)
       this.user = updatedUser
-      console.log('finished update')
     }
   }
 })
