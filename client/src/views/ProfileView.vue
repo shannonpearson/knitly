@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
 import type User from '@/types/User'
 import PrivateProfile from '@/components/profile/PrivateProfile.vue'
@@ -35,17 +36,25 @@ export default {
         await this.loggedInUserStore.updateProfile({ id: this.user.id, ...userData })
       }
       this.updateEditingState(false)
+    },
+    redirectMissingUser() {
+      console.log('no user, redirecting')
+      router.push('/login')
     }
   },
   computed: {
     user() {
       return storeToRefs(this.loggedInUserStore).user.value
     }
+  },
+  created() {
+    if (
+      storeToRefs(this.loggedInUserStore).isLoggedIn.value &&
+      !storeToRefs(this.loggedInUserStore).user.value
+    ) {
+      this.redirectMissingUser()
+    }
   }
-  // created() {
-  //   const { user } = storeToRefs(this.loggedInUserStore)
-  //   this.user = user
-  // }
 }
 </script>
 
