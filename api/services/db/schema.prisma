@@ -32,28 +32,21 @@ model Pattern {
   craft Craft
   category Category[] @default([OTHER])
   yarnWeight YarnWeight[] @default([])
-  rowGauge String?
-  stitchGauge String?
+  gaugeRows Int?
+  gaugeStitches Int?
+  gaugeSizeInCm Int?
   suggestedYarn String?
-  meterage Int[]
-  needleSize Int
-  colorCount Int
-  attributes Attribute[]
-  tags AssignedPatternTag[] 
-}
-
-model AssignedPatternTag {
-  id String @id @db.Uuid @default(uuid())
-  pattern Pattern @relation(fields: [patternId], references: [id])
-  patternId String  @db.Uuid
-  tag PatternTag @relation(fields: [tagId], references: [id])
-  tagId String  @db.Uuid
+  meterage Int[] @default([])
+  needleSize Float[] @default([])
+  colorCount Int?
+  attributes Attribute[] @default([])
+  tags PatternTag[]
 }
 
 model PatternTag {
   id String @id @db.Uuid @default(uuid())
   name String
-  patterns AssignedPatternTag[]
+  patterns Pattern[]
 }
 
 enum YarnWeight {
