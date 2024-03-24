@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type User from '@/types/User'
-import { doesSessionExist } from 'supertokens-web-js/recipe/session'
+import Session, { doesSessionExist } from 'supertokens-web-js/recipe/session'
+
 import { getLoggedInUser, updateLoggedInUser } from '@/queries/user'
 
 // this is an OPTIONS store
@@ -19,7 +20,11 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
 
       if (isAuthenticated) {
         const currentUser = await getLoggedInUser()
-        this.user = currentUser
+        if (!currentUser) {
+          this.logout()
+        } else {
+          this.user = currentUser
+        }
       } else {
         this.user = null
       }
@@ -29,6 +34,10 @@ export const useLoggedInUserStore = defineStore('loggedInUser', {
     },
     setLoggedIn(loggedIn: boolean) {
       this.isLoggedIn = loggedIn
+    },
+    async logout() {
+      await Session.signOut()
+      this.handleLogout()
     },
     handleLogout() {
       this.setUser(null)

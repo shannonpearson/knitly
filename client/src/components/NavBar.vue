@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { RouterLink } from 'vue-router'
-import Session from 'supertokens-web-js/recipe/session'
 import { useLoggedInUserStore } from '@/stores/loggedInUser'
 
 export default {
@@ -26,10 +25,7 @@ export default {
   },
   methods: {
     async onLogoutClick() {
-      console.log('on logout')
-      await Session.signOut()
-      console.log('done')
-      this.loggedInUserStore.handleLogout()
+      this.loggedInUserStore.logout()
     }
   },
   computed: {
