@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User
 model User {
   id         String @id @db.Uuid	@default(uuid())
   firstName  String?
@@ -16,4 +17,133 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   lastLogin DateTime?
+  patterns Pattern[]
+}
+
+// Pattern
+model Pattern {
+  id String @id @db.Uuid @default(uuid())
+  name String
+  creator User @relation(fields: [creatorId], references: [id])
+  creatorId String @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  publishedAt DateTime?
+  craft Craft
+  category Category[] @default([OTHER])
+  yarnWeight YarnWeight[] @default([])
+  rowGauge String?
+  stitchGauge String?
+  suggestedYarn String?
+  meterage Int[]
+  needleSize Int
+  colorCount Int
+  attributes Attribute[]
+  tags AssignedPatternTag[] 
+}
+
+model AssignedPatternTag {
+  id String @id @db.Uuid @default(uuid())
+  pattern Pattern @relation(fields: [patternId], references: [id])
+  patternId String  @db.Uuid
+  tag PatternTag @relation(fields: [tagId], references: [id])
+  tagId String  @db.Uuid
+}
+
+model PatternTag {
+  id String @id @db.Uuid @default(uuid())
+  name String
+  patterns AssignedPatternTag[]
+}
+
+enum YarnWeight {
+  THREAD
+  LACE
+  LIGHT_FINGERING
+  FINGERING
+  SPORT
+  DK
+  WORSTED
+  ARAN
+  BULKY
+  SUPER_BULKY
+  JUMBO
+  ROVING
+  OTHER
+}
+
+enum Craft {
+  KNIT
+  LOOM_KNIT
+  MACHINE_KNIT
+  CROCHET
+  TUNISIAN_CROCHET
+}
+
+enum Attribute {
+  COLORWORK
+  SEAMING
+  TRADITIONAL
+  LACE
+  MATURE
+  FILLED
+}
+
+enum Category {
+  CLOTHING_BOTTOMS_LEGGINGS
+  CLOTHING_BOTTOMS_PANTS
+  CLOTHING_BOTTOMS_SHORTS
+  CLOTHING_BOTTOMS_SKIRTS
+  CLOTHING_DRESSES
+  CLOTHING_INTIMATES
+  CLOTHING_INTIMATES_BRAS
+  CLOTHING_OUTERWEAR
+  CLOTHING_OTHER
+  CLOTHING_SLEEPWEAR
+  CLOTHING_SLEEPWEAR_ROBES
+  CLOTHING_TOPS_SWEATERS_CARDIGANS
+  CLOTHING_TOPS_SWEATERS_DUSTERS
+  CLOTHING_TOPS_SWEATERS_PULLOVERS
+  CLOTHING_TOPS_TANKS
+  CLOTHING_TOPS_TEES
+  CLOTHING_TOPS_VESTS
+  ACCESSORIES_BAGS
+  ACCESSORIES_FEETLEGS_LEGWARMERS
+  ACCESSORIES_FEETLEGS_SOCKS
+  ACCESSORIES_FEETLEGS_SLIPPERS
+  ACCESSORIES_FEETLEGS
+  ACCESSORIES_HANDS_GLOVES
+  ACCESSORIES_HANDS_GLOVES_FINGERLESS
+  ACCESSORIES_HANDS_MITTENS
+  ACCESSORIES_HANDS_ARMWARMERS
+  ACCESSORIES_HEAD_HEADBANDS
+  ACCESSORIES_HEAD_HATS
+  ACCESSORIES_JEWELRY
+  ACCESSORIES_OTHER
+  HOME_BLANKETS
+  HOME_COZIES
+  HOME_COASTERS
+  HOME_DECORATIVE
+  HOME_OTHER
+  HOME_PILLOWS
+  HOME_POTHOLDERS
+  HOME_TOWELS
+  PET_ACCESSORIES
+  PET_BEDDING
+  PET_CLOTHING
+  PET_OTHER
+  PET_TOYS
+  TOYS_AMIGURUMI
+  TOYS_DOLLS
+  TOYS_GAMES
+  TOYS_OTHER
+  TOYS_SOFTIES
+  COMPONENTS_APPLIQUES
+  COMPONENTS_CHARTS
+  COMPONENTS_EDGING
+  COMPONENTS_GRANNYSQUARES
+  COMPONENTS_OTHER
+  COMPONENTS_STITCHPATTERNS
+  COMPONENTS_TECHNIQUES
+  OTHER
 }
