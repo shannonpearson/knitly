@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       loggedInUserStore: useLoggedInUserStore(),
-      // user: null as User | null,
       editing: false
     }
   },
