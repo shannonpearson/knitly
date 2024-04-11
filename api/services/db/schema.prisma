@@ -30,7 +30,7 @@ model Pattern {
   updatedAt DateTime @updatedAt
   publishedAt DateTime?
   craft Craft
-  category Category[] @default([OTHER])
+  category PatternCategory[] @default([OTHER])
   yarnWeight YarnWeight[] @default([])
   gaugeRows Int?
   gaugeStitches Int?
@@ -39,7 +39,7 @@ model Pattern {
   meterage Int[] @default([])
   needleSize Float[] @default([])
   colorCount Int?
-  attributes Attribute[] @default([])
+  attributes PatternAttribute[] @default([])
   tags PatternTag[]
 }
 
@@ -47,6 +47,39 @@ model PatternTag {
   id String @id @db.Uuid @default(uuid())
   name String
   patterns Pattern[]
+}
+
+// Yarn
+model Yarn {
+  id              String @id @db.Uuid	@default(uuid())
+  brandName       String
+  fiber           Json?
+  weight          YarnWeight
+  skeinWeight     Int?
+  colorways       String[] @default([])
+  discontinuedAt  DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Colorway
+model Colorway {
+  id              String @id @db.Uuid	@default(uuid())
+  name            String
+  mainColor       String
+  secondaryColors String[] @default([])
+  attributes      ColorwayAttribute[] @default([])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum ColorwayAttribute {
+  SOLID
+  TONAL
+  SPECKLED
+  GRADIENT
+  SELF_STRIPING
+  HAND_DYED
 }
 
 enum YarnWeight {
@@ -73,7 +106,7 @@ enum Craft {
   TUNISIAN_CROCHET
 }
 
-enum Attribute {
+enum PatternAttribute {
   COLORWORK
   SEAMING
   TRADITIONAL
@@ -82,7 +115,7 @@ enum Attribute {
   FILLED
 }
 
-enum Category {
+enum PatternCategory {
   CLOTHING_BOTTOMS_LEGGINGS
   CLOTHING_BOTTOMS_PANTS
   CLOTHING_BOTTOMS_SHORTS
