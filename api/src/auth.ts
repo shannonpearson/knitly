@@ -41,9 +41,8 @@ const init = () =>
 	supertokens.init({
 		framework: "express",
 		supertokens: {
-			connectionURI:
-				"https://st-dev-47216570-cf48-11ee-9f5e-a9845bd58332.aws.supertokens.io",
-			apiKey: "uEb3nxMU61UfKTnzx9GaQumKYG",
+			connectionURI: process.env.SUPERTOKENS_CONNECTION_URI!,
+			apiKey: process.env.SUPERTOKENS_API_KEY,
 		},
 		appInfo: {
 			appName: "knitly",

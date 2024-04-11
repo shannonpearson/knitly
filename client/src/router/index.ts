@@ -5,7 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import { PUBLIC_ROUTES } from './utils'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
       path: '/',
